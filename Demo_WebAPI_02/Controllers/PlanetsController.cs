@@ -12,6 +12,7 @@ namespace Demo_WebAPI_02.Controllers
     public class PlanetsController : ControllerBase
     {
         private readonly PlanetRepository _planetRepository;
+        
 
         public PlanetsController(PlanetRepository planetRepository)
         {
@@ -28,6 +29,31 @@ namespace Demo_WebAPI_02.Controllers
                 Id = p.Id,
                 Name = p.Name
             }));
+        }
+        [HttpPost]
+        public IActionResult AddPlanet(PlanetRequestDto planetRequestDto)
+        {
+            Planet planetToAdd = new Planet()
+            {
+                Name = planetRequestDto.Name,
+                DiscoveryDate = planetRequestDto.DiscoveryDate,
+                Desc = planetRequestDto.Description,
+                NbMoon = planetRequestDto.NbMoon,
+                SolarSystemId = planetRequestDto.StelarSystemId,
+                Id = 0
+            };
+
+            Planet result =_planetRepository.Insert(planetToAdd);
+
+            return CreatedAtAction(nameof(GetAllPlanets), new PlanetResponseDto()
+            {
+              Id=result.Id,
+              Name=result.Name,
+              DiscoveryDate=result.DiscoveryDate,
+              Description=result.Desc,
+              NbMoon=result.NbMoon,
+              StelarSystemId=result.SolarSystemId,
+            });
         }
     }
 }

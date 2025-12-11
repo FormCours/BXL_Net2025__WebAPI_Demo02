@@ -68,6 +68,31 @@ namespace Demo_WebAPI_02.Controllers
             }));
         }
 
+        [HttpPost]
+        public IActionResult InsertSolarSystem(SolarSystemRequestDto data)
+        {
+            // Element à ajouter (DTO -> Model)
+            SolarSystem systemSolarToAdd = new SolarSystem()
+            {
+                Name = data.Name,
+            };
+
+            // Utilisation du service pour ajouter l'élément en DB
+            SolarSystem result = _solarSystemRepository.Insert(systemSolarToAdd);
+
+            // Objet a renvoyer au client (Model -> DTO)
+            SolarSystemResponseDto dto = new SolarSystemResponseDto()
+            {
+                Id = result.Id,
+                Name = result.Name,
+            };
+
+            // Envoi d'une réponse au client avec :
+            //  - Un code de statut : 201 - CREATE
+            //  - La localisation (Champs "location" dans le header de la réponse)
+            //  - Les données (format DTO)
+            return CreatedAtAction(nameof(GetSolarSystemById), new {id = result.Id}, dto);
+        }
 
 
     }
