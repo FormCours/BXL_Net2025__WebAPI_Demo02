@@ -7,4 +7,5 @@ public class Planet
     public required string? Description { get; set; }
     public required int NbMoon { get; set; }
     public required DateTime DiscoveryDate {  get; set; }
+    public required int SolarSystemId { get; set; }
 }

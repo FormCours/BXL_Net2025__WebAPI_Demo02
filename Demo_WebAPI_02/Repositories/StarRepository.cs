@@ -20,14 +20,14 @@ namespace Demo_WebAPI_02.Repositories
 
         public IEnumerable<Star> GetAll()
         {
-            return _dbConnection.Query<Star>("SELECT [id], [name], [is_dead] AS [isdead] FROM [star];");
+            return _dbConnection.Query<Star>("SELECT [id], [name], [is_dead] AS [isdead], [solar_system_id] AS [solarsystemid] FROM [star];");
         }
 
         public Star Insert(Star star)
         { 
-            string query = "INSERT INTO [star] ([name], [is_dead])" +
+            string query = "INSERT INTO [star] ([name], [is_dead], [solar_system_id])" +
                            " OUTPUT [inserted].[id], [inserted].[name], [inserted].[is_dead] AS [isdead]" +
-                           " VALUES (@Name, @IsDead);";
+                           " VALUES (@Name, @IsDead, @SolarSystemId);";
 
             return _dbConnection.QuerySingle<Star>(query, star);
         }

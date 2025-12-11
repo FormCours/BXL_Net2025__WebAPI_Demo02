@@ -20,19 +20,19 @@ public class PlanetRepository
 
     public Planet? GetById(int id)
     {
-        return _dbConnection.QuerySingle<Planet>("SELECT * FROM [planet] WHERE id = @id;", new {id});
+        return _dbConnection.QuerySingle<Planet>("SELECT [name], [desc], [nb_moon] AS [nbmoon], [discovery_date] AS [discoverydate], [solar_system_id] AS [solarsystemid] FROM [planet] WHERE id = @id;", new {id});
     }
 
     public IEnumerable<Planet> GetAll()
     {
-        return _dbConnection.Query<Planet>("SELECT * FROM [planet];");
+        return _dbConnection.Query<Planet>("SELECT [name], [desc], [nb_moon] AS [nbmoon], [discovery_date] AS [discoverydate], [solar_system_id] AS [solarsystemid] FROM [planet];");
     }
 
     public Planet Insert(Planet planet)
     {
-        string query = "INSERT INTO [planet] ([name], [desc], [nb_moon], [discovery_date])" +
-                       " OUTPUT [inserted].[id], [inserted].[name], [inserted].[desc], [inserted].[nb_moon], [inserted].[discovery_date]" +
-                       " VALUES (@Name, @Desc, @NbMoon, @DiscoveryDate);";
+        string query = "INSERT INTO [planet] ([name], [desc], [nb_moon], [discovery_date], [solar_system_id])" +
+                       " OUTPUT [inserted].[id], [inserted].[name], [inserted].[desc], [inserted].[nb_moon], [inserted].[discovery_date], [inserted].[solar_system_id] AS [SolarSystemId]" +
+                       " VALUES (@Name, @Desc, @NbMoon, @DiscoveryDate, @SolarSystemId);";
 
         return _dbConnection.QuerySingle<Planet>(query, planet);
     }
