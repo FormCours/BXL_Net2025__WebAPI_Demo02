@@ -6,6 +6,16 @@ var builder = WebApplication.CreateBuilder(args);
 
 const string CONNECTION_STRING = "Data Source=ICT-204-00;Initial Catalog=astro_db;Integrated Security=True;Trust Server Certificate=True";
 
+builder.Services.AddCors(options =>
+{
+    // Ajout une régle -> Tout autorisé (dev uniquement)
+    options.AddPolicy("AllowAll", builder =>
+    {
+        builder.AllowAnyHeader();
+        builder.AllowAnyMethod();
+        builder.AllowAnyOrigin();
+    });
+});
 // Add services to the container (C'est magic -> On vera ca en dev :p)
 builder.Services.AddTransient<PlanetRepository>();
 builder.Services.AddTransient<SolarSystemRepository>();
@@ -31,6 +41,8 @@ if (app.Environment.IsDevelopment())
     app.UseSwagger();
     app.UseSwaggerUI();
 }
+
+app.UseCors("AllowAll");
 
 app.UseHttpsRedirection();
 
