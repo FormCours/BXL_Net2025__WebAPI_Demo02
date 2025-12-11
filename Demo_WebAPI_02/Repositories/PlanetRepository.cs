@@ -20,12 +20,12 @@ public class PlanetRepository
 
     public Planet? GetById(int id)
     {
-        return _dbConnection.QuerySingleOrDefault<Planet>("SELECT [name], [desc], [nb_moon] AS [nbmoon], [discovery_date] AS [discoverydate], [solar_system_id] AS [solarsystemid] FROM [planet] WHERE id = @id;", new {id});
+        return _dbConnection.QuerySingleOrDefault<Planet>("SELECT [id], [name], [desc], [nb_moon] AS [nbmoon], [discovery_date] AS [discoverydate], [solar_system_id] AS [solarsystemid] FROM [planet] WHERE id = @id;", new {id});
     }
 
     public IEnumerable<Planet> GetAll()
     {
-        return _dbConnection.Query<Planet>("SELECT [name], [desc], [nb_moon] AS [nbmoon], [discovery_date] AS [discoverydate], [solar_system_id] AS [solarsystemid] FROM [planet];");
+        return _dbConnection.Query<Planet>("SELECT [id], [name], [desc], [nb_moon] AS [nbmoon], [discovery_date] AS [discoverydate], [solar_system_id] AS [solarsystemid] FROM [planet];");
     }
 
     public Planet Insert(Planet planet)
