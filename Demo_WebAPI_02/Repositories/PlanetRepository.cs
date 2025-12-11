@@ -20,7 +20,7 @@ public class PlanetRepository
 
     public Planet? GetById(int id)
     {
-        return _dbConnection.QuerySingle<Planet>("SELECT [name], [desc], [nb_moon] AS [nbmoon], [discovery_date] AS [discoverydate], [solar_system_id] AS [solarsystemid] FROM [planet] WHERE id = @id;", new {id});
+        return _dbConnection.QuerySingleOrDefault<Planet>("SELECT [name], [desc], [nb_moon] AS [nbmoon], [discovery_date] AS [discoverydate], [solar_system_id] AS [solarsystemid] FROM [planet] WHERE id = @id;", new {id});
     }
 
     public IEnumerable<Planet> GetAll()
